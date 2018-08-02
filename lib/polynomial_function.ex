@@ -6,17 +6,22 @@ defmodule PolynomialFunction do
 
   def make_function_usable(raw_function) do
     raw_function
+    |> clean_up_string()
+    |> String.split("+")
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.map(&polynomial_to_tuple/1)
+    |> simplify()
+    |> func_to_string()
+  end
+
+  def clean_up_string(str) do
+    str
     |> String.trim()
     |> String.replace(" ", "")
     |> String.replace("**", "^")
     |> String.replace(",", ".")
     |> String.replace("-", "+-")
     |> String.replace("*", "")
-    |> String.split("+")
-    |> Enum.reject(&(&1 == ""))
-    |> Enum.map(&polynomial_to_tuple/1)
-    |> simplify()
-    |> func_to_string()
   end
 
   def polynomial_to_tuple(polynomial) do
