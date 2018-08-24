@@ -1,5 +1,5 @@
 defmodule Simplifier do
-  # s@operands [:plus, :minus, :times, :divide, :power]
+  @operations_op_a [:sin, :cos, :tan, :abs]
 
   def simplify([a]) do
     a
@@ -74,12 +74,20 @@ defmodule Simplifier do
     end
   end
 
-  def simplify([op, [a, b]]) when is_atom(a) do
+  def simplify([op, [a, b]]) when is_atom(a) and is_list(b) do
     [op, [a, simplify(b)]]
   end
 
-  def simplify([op, [a, b]]) when is_atom(b) do
+  def simplify([op, [a, b]]) when is_list(a) and is_atom(b) do
     [op, [simplify(a), b]]
+  end
+
+  def simplify([op, [a, nil]]) when op in @operations_op_a and is_list(a) do
+    [op, [simplify(a), nil]]
+  end
+
+  def simplify([op, [a, nil]]) when op in @operations_op_a do
+    [op, [a, nil]]
   end
 
   def simplify([op, [a, b]]) do
