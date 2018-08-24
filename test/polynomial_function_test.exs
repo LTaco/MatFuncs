@@ -125,4 +125,21 @@ defmodule PolynomialFunctionTest do
       assert PolynomialFunction.func_to_string([{3.0, 2.0}, {0.0, 2.0}]) == "2x^3+2"
     end
   end
+
+  describe "makes drivative" do
+    test "simple case" do
+      assert PolynomialFunction.get_derivative([{4.0,1.0},{2.0,2.0}]) == [{3.0,4.0},{1.0,4.0}]
+    end
+    test "eliminate exponents of 0" do
+      assert PolynomialFunction.get_derivative([{0.0,2.0}]) == []
+    end
+  end
+
+  describe "converts input string into machiene-readable format
+              and back into human-readable format" do
+    test "messy but correct input function" do
+      assert PolynomialFunction.make_function_usable(" 2*x^3 +- 3,4x - x**4+x^3") ==
+               "-x^4+3x^3-3.4x"
+    end
+  end
 end

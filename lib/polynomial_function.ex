@@ -11,13 +11,13 @@ defmodule PolynomialFunction do
     |> Enum.reject(&(&1 == ""))
     |> Enum.map(&polynomial_to_tuple/1)
     |> simplify()
+    #|> get_derivative()
     |> func_to_string()
   end
 
   def clean_up_string(str) do
     str
-    |> String.trim()
-    |> String.replace(" ", "")
+    |> String.replace(~r/\s/, "")
     |> String.replace("**", "^")
     |> String.replace(",", ".")
     |> String.replace("-", "+-")
@@ -28,11 +28,11 @@ defmodule PolynomialFunction do
     case String.split(polynomial, "x^") do
       [a] ->
         case Float.parse(a) do
-          {fac, ""} ->
-            {0.0, fac}
+          {val, ""} ->
+            {0.0, val}
 
-          {fac, "x"} ->
-            {1.0, fac}
+          {val, "x"} ->
+            {1.0, val}
 
           _ ->
             case a do
@@ -55,9 +55,9 @@ defmodule PolynomialFunction do
             {exp, -1.0}
 
           _ ->
-            {fac, _} = Float.parse(a)
+            {val, _} = Float.parse(a)
             {exp, _} = Float.parse(b)
-            {exp, fac}
+            {exp, val}
         end
     end
   end
@@ -68,6 +68,23 @@ defmodule PolynomialFunction do
     |> Enum.map(fn {a, list} -> {a, Enum.reduce(list, fn n, acc -> n + acc end)} end)
     |> Enum.reject(fn {_, val} -> val == 0 end)
     |> Enum.reverse()
+  end
+
+  def get_derivative(list) do
+    list
+    |> Enum.map(fn {exp, val} ->
+      case {exp, val} do
+        {0.0, _} ->
+          {0.0, 0.0}
+
+        {_, _} ->
+          val = val * exp
+          exp = exp - 1
+          {exp, val}
+      end
+    end)
+
+    |> Enum.reject(&(&1 == {0.0, 0.0}))
   end
 
   def func_to_string(func) do
