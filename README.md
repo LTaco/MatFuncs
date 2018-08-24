@@ -1,21 +1,13 @@
 # PolynomialFunction
 
-**TODO: Add description**
-
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `polynomial_function` to your list of dependencies in `mix.exs`:
+1. [Download Git for Windows](https://git-scm.com/downloads)
+2. Use right-click context menu and choose "git clone..." or...
+3. Open `Git Bash.exe` and navigate to the destination where you want your repo to be
+4. Visit this repository site and click the green button in the upper right `Clone or download`
+5. Choose HTTPS or SSH and copy the URL
+6. Insert it into the UI from step 2 or run `git clone $URL` if you went with step 3.
 
-```elixir
-def deps do
-  [
-    {:polynomial_function, "~> 0.1.0"}
-  ]
-end
-```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/polynomial_function](https://hexdocs.pm/polynomial_function).
 
